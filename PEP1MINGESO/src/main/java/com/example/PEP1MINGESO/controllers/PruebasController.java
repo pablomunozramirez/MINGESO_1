@@ -10,4 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PruebasController {
     @Autowired
     PruebasService pruebasService;
+
+
+
+
 }
