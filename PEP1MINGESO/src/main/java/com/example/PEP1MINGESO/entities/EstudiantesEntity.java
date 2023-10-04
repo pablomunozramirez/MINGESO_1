@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -20,8 +21,9 @@ public class EstudiantesEntity {
 
     private String nombre;
     private String apellidos;
-    private Date fecha_nacimiento;
+    private LocalDate fecha_nacimiento;
     private String tipo_colegio;
     private String nombre_colegio;
     private int anio_egreso;
+    private double arancel;
 }

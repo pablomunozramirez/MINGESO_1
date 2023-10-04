@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Estudiantes</title>
+</head>
+<body>
+
+<h2>Formulario de Estudiantes</h2>
+
+<form action="/estudiantes/guardar" method="post" onsubmit="alert('Se creo el usuario correctamente');">
+  <label>RUT: <input type="text" name="rut" required></label><br>
+  <label>Nombre: <input type="text" name="nombre" required></label><br>
+  <label>Apellidos: <input type="text" name="apellidos" required></label><br>
+  <label>Fecha de Nacimiento: <input type="date" name="fecha_nacimiento" required></label><br>
+  <label> Ingrese el tipo de colegio: </label>
+  <select name="tipo_colegio" required>
+    <option value="" disabled selected>Seleccione un tipo</option>
+    <option value="1"> Municipal</option>
+    <option value="2"> Subencionado</option>
+    <option value="3"> Privado</option>
+  </select><br>
+  <label>Nombre del Colegio: <input type="text" name="nombre_colegio" required></label><br>
+  <label>Año de Egreso: <input type="number" name="anio_egreso" required></label><br>
+
+  <button type="submit">Guardar</button>
+</form>
+
+<a href="http://localhost:8090" class="boton">Volver al menú</a>
+
+</body>
+</html>
