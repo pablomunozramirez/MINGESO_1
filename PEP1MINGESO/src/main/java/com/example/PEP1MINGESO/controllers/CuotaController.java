@@ -61,7 +61,6 @@ public class CuotaController {
     }
     @PostMapping("/subvencionado")
     public String cuotassubvencionado (@ModelAttribute("rut") String rut,@RequestParam String numero_Cuotas ,Model model){
-        System.out.println("Numero de cuotas:"+numero_Cuotas);
         cuotaService.generarCuota(rut, numero_Cuotas);
         return "redirect:/";
     }

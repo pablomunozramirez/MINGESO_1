@@ -24,7 +24,7 @@ public class EstudiantesController {
     }
 
     @PostMapping("/guardar")
-        public String guardarEstudiante(@ModelAttribute EstudiantesEntity estudianteRequest, RedirectAttributes redirectAttributes) {
+            public String guardarEstudiante(@ModelAttribute EstudiantesEntity estudianteRequest, RedirectAttributes redirectAttributes) {
         try {
             estudiantesService.crearEstudiante1(estudianteRequest);
             // Agregar mensaje de éxito a los atributos de redirección

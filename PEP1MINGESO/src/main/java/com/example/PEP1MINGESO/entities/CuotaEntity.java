@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "cuota")
 @Data
@@ -19,5 +21,8 @@ public class CuotaEntity {
     private int monto;
     private boolean pagada;
 
-    private String rut_cuota;
+    @Column(name = "rut_cuota")
+    private String rutCuota;
+    @Column(name = "fecha_cuota")
+    private LocalDate fechaCuota;
 }
