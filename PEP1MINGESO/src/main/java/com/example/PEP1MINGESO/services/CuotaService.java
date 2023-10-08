@@ -45,6 +45,7 @@ public class CuotaService {
                 cuota.setRutCuota(rut);
                 cuota.setMonto(valorCuotas);
                 cuota.setPagada(false);
+                cuota.setFechaCuota(LocalDate.now());
                 cuotaRepository.save(cuota);
             }
         }
@@ -53,5 +54,12 @@ public class CuotaService {
     public List<Integer> obternerCuotaPorRut(String rut){
         List <CuotaEntity> cuotas = cuotaRepository.findByRutCuota(rut);
         return cuotas.stream().map(CuotaEntity::getMonto).toList();
+    }
+
+    public void existenCuotas(String rut) {
+        boolean existenCuotas = cuotaRepository.existsByRutCuota(rut);
+        if (existenCuotas) {
+            throw new EntityExistsException("El estudiante: " + rut + " ya tiene cuotas");
+        }
     }
 }

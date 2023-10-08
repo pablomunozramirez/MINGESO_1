@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface CuotaRepository extends CrudRepository <CuotaEntity, Long> {
     List<CuotaEntity> findByRutCuota(String rut);
+
+    boolean existsByRutCuota(String rut);
 }

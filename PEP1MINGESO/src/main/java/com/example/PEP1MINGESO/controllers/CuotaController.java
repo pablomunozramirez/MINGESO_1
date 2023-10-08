@@ -28,6 +28,7 @@ public class CuotaController {
     public String generarCuota1(@RequestParam String rut, @RequestParam String tipoPago,Model model, RedirectAttributes redirectAttributes) {
         try {
             estudiantesService.existeEstudiante(rut);
+            cuotaService.existenCuotas(rut);
             redirectAttributes.addFlashAttribute("mensaje", "Estudiante creado exitosamente");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al crear el estudiante: " + e.getMessage());
