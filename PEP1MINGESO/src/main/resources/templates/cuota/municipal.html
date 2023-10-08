@@ -8,11 +8,13 @@
 <body>
 
 <h2>Generar Cuota</h2>
-<form action="/cuota/municipal" method="post" onsubmit="alert('Se generaron las cuotas correctamente');">
-  <label for="rut">RUT:</label>
-  <input type="text" id="rut" name="rut" required><br>
+
+<p th:text="${rut}"></p>
+<form action="/cuota/municipal" method="post">
+  <input type="hidden" name="rut" th:value="${rut}" />
+  <label> Ingrese el número de cuotas que desea: </label>
   <select name="numero_Cuotas" required>
-    <option value="" disabled selected>Seleccione un numero</option>
+    <option value="" disabled selected>Seleccione un numero de cuotas:</option>
     <option value=1> 1</option>
     <option value=2> 2</option>
     <option value=3> 3</option>

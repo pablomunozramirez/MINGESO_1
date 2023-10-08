@@ -26,21 +26,25 @@ public class CuotaController {
 
     @PostMapping("/generar")
     public String generarCuota1(@RequestParam String rut, @RequestParam String tipoPago,Model model, RedirectAttributes redirectAttributes) {
-        int a = estudiantesService.existeEstudiante(rut);
-        if (a==1 && "contado".equals(tipoPago)) {
-            cuotaService.generarCuota(rut, 1);
-            model.addAttribute("mensaje", "Mensaje de éxito o información");
+        try {
+            estudiantesService.existeEstudiante(rut);
+            redirectAttributes.addFlashAttribute("mensaje", "Estudiante creado exitosamente");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error al crear el estudiante: " + e.getMessage());
+        }
+
+        if ("contado".equals(tipoPago)) {
+            cuotaService.generarCuota(rut, "1");
             return "redirect:/";
-        } else if (a == 1 && "cuotas".equals(tipoPago)) {
-            System.out.println("rut:"+rut);
+        } else if ("cuotas".equals(tipoPago)) {
             int tipo = estudiantesService.obtenerTipo(rut);
             if (tipo == 1){
                 System.out.println("rut:"+rut);
-                //redirectAttributes.addFlashAttribute("rut", rut);
+                redirectAttributes.addFlashAttribute("rut", rut);
                 return "redirect:/cuota/municipal";
             } else if (tipo==2) {
                 redirectAttributes.addFlashAttribute("rut", rut);
-                return "redirect:/cuota/subencionado";
+                return "redirect:/cuota/subvencionado";
             }else {
                 redirectAttributes.addFlashAttribute("rut", rut);
                 return "redirect:/cuota/privado";
@@ -50,19 +54,14 @@ public class CuotaController {
         }
     }
 
-    @PostMapping("/contado")
-    public String generarContado (String rut, RedirectAttributes redirectAttributes){
-        cuotaService.generarCuota(rut, 1);
-        redirectAttributes.addFlashAttribute("mensaje", "Estudiante creado exitosamente");
-        return "redirect:/";
+    @GetMapping("/subvencionado")
+    public String mostrarCuotasSubvencionado() {
+        System.out.println("subvencionado");
+        return ("/cuota/subvencionado");
     }
-
-    @GetMapping("/subencionado")
-    public String mostrarCuotasSubencionado(){
-        return ("/cuota/subencionado");
-    }
-    @PostMapping("/subencionado")
-    public String cuotasSubencionado (@ModelAttribute("rut") String rut,@RequestParam(value = "numero_Cuotas") Integer numero_Cuotas ,Model model){
+    @PostMapping("/subvencionado")
+    public String cuotassubvencionado (@ModelAttribute("rut") String rut,@RequestParam String numero_Cuotas ,Model model){
+        System.out.println("Numero de cuotas:"+numero_Cuotas);
         cuotaService.generarCuota(rut, numero_Cuotas);
         return "redirect:/";
     }
@@ -72,21 +71,18 @@ public class CuotaController {
         return ("/cuota/privado");
     }
     @PostMapping("/privado")
-    public String cuotasPrivado (@ModelAttribute("rut") String rut,@RequestParam(value = "numero_Cuotas") Integer numero_Cuotas ,Model model){
+    public String cuotasPrivado (@ModelAttribute("rut") String rut,@RequestParam(value = "numero_Cuotas") String numero_Cuotas ,Model model){
         cuotaService.generarCuota(rut, numero_Cuotas);
         return "redirect:/";
     }
 
     @GetMapping("/municipal")
     public String mostrarCuotasMunicipal() {
-        System.out.println("rut:");
         return "/cuota/municipal";
     }
     @PostMapping("/municipal")
     public String cuotasMunicipal (@RequestParam String rut, @RequestParam String numero_Cuotas,Model model){
-        int numeroCuotas = Integer.parseInt(numero_Cuotas);
-        System.out.println("rut:"+rut);
-        cuotaService.generarCuota(rut, numeroCuotas);
+        cuotaService.generarCuota(rut, numero_Cuotas);
         return "redirect:/";
     }
 

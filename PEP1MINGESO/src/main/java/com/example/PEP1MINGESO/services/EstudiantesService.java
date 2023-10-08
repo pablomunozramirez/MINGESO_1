@@ -42,12 +42,11 @@ public class EstudiantesService {
         return estudiante;
     }
 
-    public int existeEstudiante (String rut){
-        boolean a = estudiantesRepository.existsByRut(rut);
-        if (a){
-            return 1;
-        }else{
-            return 0;
+    public void existeEstudiante (String rut){
+        Optional<EstudiantesEntity> Estudiante = estudiantesRepository.findById(rut);
+        if (Estudiante.isEmpty()) {
+            // Manejar el caso cuando ya existe un estudiante con el mismo rut
+            throw new EntityExistsException("Ya existe un estudiante con el mismo rut: " + rut);
         }
     }
 

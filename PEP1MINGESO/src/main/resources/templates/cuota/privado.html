@@ -9,9 +9,12 @@
 
 <h2>Generar Cuota</h2>
 
-<form action="/cuota/generar" method="post">
-  <select name="numero de cuotas" required>
-    <option value="" disabled selected>Seleccione un numero</option>
+<p th:text="${rut}"></p>
+<form action="/cuota/privado" method="post">
+  <input type="hidden" name="rut" th:value="${rut}" />
+  <label> Ingrese el número de cuotas que desea: </label>
+  <select name="numero_Cuotas" required>
+    <option value="" disabled selected>Seleccione un numero de cuotas:</option>
     <option value=1> 1</option>
     <option value=2> 2</option>
     <option value=3> 3</option>
