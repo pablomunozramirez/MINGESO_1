@@ -10,12 +10,15 @@
 <h2>Generar Cuota</h2>
 
 <form action="/cuota/generar" method="post">
-  <label>RUT: <input type="text" name="rut" required></label><br>
-
-  <label for="tipoPago">Tipo de Pago:</label>
-  <select id="tipoPago" name="tipoPago" required>
-    <option value="contado">Contado</option>
-    <option value="cuotas">Cuotas</option>
+  <select name="numero de cuotas" required>
+    <option value="" disabled selected>Seleccione un numero</option>
+    <option value=1> 1</option>
+    <option value=2> 2</option>
+    <option value=3> 3</option>
+    <option value=4> 4</option>
+    <option value=5> 5</option>
+    <option value=6> 6</option>
+    <option value=7> 7</option>
   </select><br>
 
   <button type="submit">Generar Cuota</button>

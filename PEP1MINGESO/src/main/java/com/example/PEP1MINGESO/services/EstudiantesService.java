@@ -27,7 +27,6 @@ public class EstudiantesService {
 
         // Si no existe, asignar el rut y guardar el nuevo estudiante
         EstudiantesEntity estudiante = convertirAEntidad(estudianteRequest);
-        estudiante.setArancel(calcularArancel(estudiante));
         estudiantesRepository.save(estudiante);
     }
 
@@ -42,6 +41,31 @@ public class EstudiantesService {
         estudiante.setAnio_egreso(estudianteRequest.getAnio_egreso());
         return estudiante;
     }
+
+    public int existeEstudiante (String rut){
+        boolean a = estudiantesRepository.existsByRut(rut);
+        if (a){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+    public int obtenerTipo(String rut){
+        Optional <EstudiantesEntity> estudianteOptional = estudiantesRepository.findById(rut);
+        EstudiantesEntity estudiante = estudianteOptional.get();
+        String tipo = estudiante.getTipo_colegio();
+        if (tipo.equals("1")){
+            return 1;
+        }else if (tipo.equals("2")){
+            return 2;
+        }else{
+            return 3;
+        }
+
+    }
+
+
 
     public double calcularArancel(EstudiantesEntity estudiante) {
         double arancel = 1500000;
