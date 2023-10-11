@@ -31,7 +31,8 @@ public class CuotaService {
             cuota.setNumero_cuota(1);
             cuota.setRutCuota(rut);
             cuota.setMonto(valorCuotas);
-            cuota.setPagada(false);
+            cuota.setFechaCuota(LocalDate.parse("2023-04-01"));
+            cuota.setPagada("Pagada");
             cuotaRepository.save(cuota);
         }else{
             Optional<EstudiantesEntity> estudiante = estudiantesRepository.findById(rut);
@@ -44,22 +45,42 @@ public class CuotaService {
                 cuota.setNumero_cuota(i);
                 cuota.setRutCuota(rut);
                 cuota.setMonto(valorCuotas);
-                cuota.setPagada(false);
-                cuota.setFechaCuota(LocalDate.now());
+                cuota.setPagada("Pendiente");
+                cuota.setFechaCuota(LocalDate.parse("2023-04-01"));
                 cuotaRepository.save(cuota);
             }
         }
     }
 
-    public List<Integer> obternerCuotaPorRut(String rut){
+    public List<CuotaEntity> obternerCuotaPorRut(String rut){
         List <CuotaEntity> cuotas = cuotaRepository.findByRutCuota(rut);
-        return cuotas.stream().map(CuotaEntity::getMonto).toList();
+        return cuotas;
     }
 
-    public void existenCuotas(String rut) {
+    public List<String> cuotaPagada(String rut){
+        List <CuotaEntity> cuotas = cuotaRepository.findByRutCuota(rut);
+        return cuotas.stream().map(CuotaEntity::getPagada).toList();
+    }
+
+    public int existenCuotas(String rut) {
         boolean existenCuotas = cuotaRepository.existsByRutCuota(rut);
-        if (existenCuotas) {
-            throw new EntityExistsException("El estudiante: " + rut + " ya tiene cuotas");
+
+        // Si existen cuotas, retornar 1; de lo contrario, retornar 0
+        return existenCuotas ? 1 : 0;
+    }
+
+    public void cambiarEstadoDePagoCuota(Long id_cuota){
+        LocalDate fechaActual = LocalDate.now();
+        int diaActual = fechaActual.getDayOfMonth();
+        if (diaActual >= 5 && diaActual <= 10) {
+            Optional<CuotaEntity> cuota = cuotaRepository.findById(id_cuota);
+            if (cuota.isPresent()) {
+                CuotaEntity cuota1 = cuota.get();
+                cuota1.setPagada("Pagada");
+                cuotaRepository.save(cuota1);
+            } else {
+                System.out.println("No existe la cuota");
+            }
         }
     }
 }

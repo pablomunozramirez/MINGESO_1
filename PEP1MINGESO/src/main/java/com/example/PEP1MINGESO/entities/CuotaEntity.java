@@ -19,7 +19,7 @@ public class CuotaEntity {
     private Long id_cuota;
     private int numero_cuota;
     private int monto;
-    private boolean pagada;
+    private String pagada;
 
     @Column(name = "rut_cuota")
     private String rutCuota;

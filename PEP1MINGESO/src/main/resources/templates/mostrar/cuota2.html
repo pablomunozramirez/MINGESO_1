@@ -4,27 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mostrar Cuotas</title>
-  <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
 </head>
 <body>
 
-<h2>Cuotas del Estudiante</h2>
+<h2>Mostrar Cuotas</h2>
 
-<p th:text="${nombre}"></p>
 
 <table>
   <thead>
@@ -32,6 +16,7 @@
     <th>Cuota</th>
     <th>Monto</th>
     <th>Estado</th>
+    <th>Acciones</th>
   </tr>
   </thead>
   <tbody>
@@ -39,6 +24,14 @@
     <td th:text="${status.index + 1}"></td>
     <td th:text="${cuota.monto}"></td>
     <td th:text="${cuota.pagada}"></td>
+    <td th:if="${cuota.pagada == 'Pendiente'}">
+      <form th:action="@{'/mostrar/pagarcuota/' + ${cuota.id_cuota}}" method="post">
+        <button type="submit">Pagar Cuota</button>
+      </form>
+    </td>
+    <td th:unless="${cuota.pagada == 'Pendiente'}">
+      <!-- Aquí puedes agregar cualquier contenido que quieras mostrar cuando la cuota no esté pendiente -->
+    </td>
   </tr>
   </tbody>
 </table>

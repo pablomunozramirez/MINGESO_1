@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.standard.inline.StandardTextInliner;
 
+import static org.apache.coyote.http11.Constants.a;
+
 @Controller
 @RequestMapping("/cuota")
 public class CuotaController {
@@ -26,21 +28,20 @@ public class CuotaController {
 
     @PostMapping("/generar")
     public String generarCuota1(@RequestParam String rut, @RequestParam String tipoPago,Model model, RedirectAttributes redirectAttributes) {
+        int a = estudiantesService.existeEstudiante(rut);
+        int b = cuotaService.existenCuotas(rut);
         try {
-            estudiantesService.existeEstudiante(rut);
-            cuotaService.existenCuotas(rut);
+
             redirectAttributes.addFlashAttribute("mensaje", "Estudiante creado exitosamente");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al crear el estudiante: " + e.getMessage());
         }
-
-        if ("contado".equals(tipoPago)) {
+        if ("contado".equals(tipoPago) && a==1 && b==0) {
             cuotaService.generarCuota(rut, "1");
             return "redirect:/";
-        } else if ("cuotas".equals(tipoPago)) {
+        } else if ("cuotas".equals(tipoPago)&& a==1 && b==0)  {
             int tipo = estudiantesService.obtenerTipo(rut);
             if (tipo == 1){
-                System.out.println("rut:"+rut);
                 redirectAttributes.addFlashAttribute("rut", rut);
                 return "redirect:/cuota/municipal";
             } else if (tipo==2) {
