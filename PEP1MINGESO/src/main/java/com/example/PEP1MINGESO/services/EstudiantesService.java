@@ -17,15 +17,11 @@ public class EstudiantesService {
     EstudiantesRepository estudiantesRepository;
 
     public void crearEstudiante1(EstudiantesEntity estudianteRequest) {
-        // Verificar si ya existe un estudiante con el mismo rut
         Optional<EstudiantesEntity> existingEstudiante = estudiantesRepository.findById(estudianteRequest.getRut());
 
         if (existingEstudiante.isPresent()) {
-            // Manejar el caso cuando ya existe un estudiante con el mismo rut
             throw new EntityExistsException("Ya existe un estudiante con el mismo rut: " + estudianteRequest.getRut());
         }
-
-        // Si no existe, asignar el rut y guardar el nuevo estudiante
         EstudiantesEntity estudiante = convertirAEntidad(estudianteRequest);
         estudiantesRepository.save(estudiante);
     }
@@ -44,15 +40,12 @@ public class EstudiantesService {
 
     public int existeEstudiante(String rut) {
         Optional<EstudiantesEntity> estudiante = estudiantesRepository.findById(rut);
-
-        // Si existe el estudiante, retornar 1; de lo contrario, retornar 0
         return estudiante.isPresent() ? 1 : 0;
     }
 
     public int obtenerTipo(String rut){
         Optional <EstudiantesEntity> estudianteOptional = estudiantesRepository.findById(rut);
         if (estudianteOptional.isEmpty()) {
-            // Manejar el caso cuando ya existe un estudiante con el mismo rut
             throw new EntityExistsException("Ya existe un estudiante con el mismo rut: " + rut);
         }
         EstudiantesEntity estudiante = estudianteOptional.get();
@@ -69,18 +62,14 @@ public class EstudiantesService {
 
     public double calcularArancel(EstudiantesEntity estudiante) {
         double arancel = 1500000;
-        //Aplica descuento por tipo de colegio
         if (estudiante.getTipo_colegio().equals("1")){
             arancel = arancel * 0.8;
         } else if (estudiante.getTipo_colegio().equals("2")){
             arancel = arancel * 0.9;
         }
-        //Aplica descuento por años desde que egresó
         LocalDate current_date = LocalDate.now();
         int current_Year = current_date.getYear();
         int egreso = estudiante.getAnio_egreso();
-        System.out.println(current_Year);
-        System.out.println(egreso);
         if(current_Year - egreso == 0){
             arancel = arancel * 0.85;
         } else if (current_Year - egreso < 3) {
@@ -94,7 +83,6 @@ public class EstudiantesService {
     public String buscarNombreByRut(String rut){
         Optional <EstudiantesEntity> estudianteOptional = estudiantesRepository.findById(rut);
         if (estudianteOptional.isEmpty()) {
-            // Manejar el caso cuando ya existe un estudiante con el mismo rut
             throw new EntityExistsException("Ya existe un estudiante con el mismo rut: " + rut);
         }
         EstudiantesEntity estudiante = estudianteOptional.get();

@@ -71,6 +71,7 @@ public class CuotaController {
     public String mostrarCuotasPrivado(){
         return ("/cuota/privado");
     }
+
     @PostMapping("/privado")
     public String cuotasPrivado (@ModelAttribute("rut") String rut,@RequestParam(value = "numero_Cuotas") String numero_Cuotas ,Model model){
         cuotaService.generarCuota(rut, numero_Cuotas);
@@ -87,6 +88,15 @@ public class CuotaController {
         return "redirect:/";
     }
 
+    @GetMapping("/generarArancel")
+    public String mostrarVistaGenerarArancel() {
+        return "/cuota/generarArancel";
+    }
 
+    @PostMapping("/generarArancel")
+    public String generarArancel(){
+        cuotaService.aplicarDescuentos();
+        return "redirect:/";
+    }
 
 }

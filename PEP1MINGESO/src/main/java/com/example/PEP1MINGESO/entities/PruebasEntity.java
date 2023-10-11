@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -18,7 +19,8 @@ public class PruebasEntity {
     @Column(unique = true, nullable = false)
     private Long id_prueba;
 
-    private Date fecha_examen;
+    private LocalDate fecha_examen;
     private int puntaje;
-    private String rut_prueba;
+    @Column(name = "rut_prueba")
+    private String rutPrueba;
 }

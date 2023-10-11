@@ -1,28 +1,28 @@
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generar Cuota</title>
-</head>
-<body>
+  <!DOCTYPE html>
+  <html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Cuota</title>
+  </head>
+  <body>
 
-<h2>Generar Cuota</h2>
+  <h2>Generar Cuota</h2>
 
-<p th:text="${rut}"></p>
-<form action="/cuota/subvencionado" method="post">
-  <input type="hidden" name="rut" th:value="${rut}" />
-  <label> Ingrese el número de cuotas que desea: </label>
-  <select name="numero_Cuotas" required>
-    <option value="" disabled selected>Seleccione un numero de cuotas:</option>
-    <option value=1> 1</option>
-    <option value=2> 2</option>
-    <option value=3> 3</option>
-    <option value=4> 4</option>
-    <option value=5> 5</option>
-    <option value=6> 6</option>
-    <option value=7> 7</option>
-  </select><br>
+  <p th:text="${rut}"></p>
+  <form action="/cuota/subvencionado" method="post">
+    <input type=hidden name="rut" th:value="${rut}" />
+    <label> Ingrese el número de cuotas que desea: </label>
+    <select name="numero_Cuotas" required>
+      <option value="" disabled selected>Seleccione un número de cuotas:</option>
+      <option value=1> 1</option>
+      <option value=2> 2</option>
+      <option value=3> 3</option>
+      <option value=4> 4</option>
+      <option value=5> 5</option>
+      <option value=6> 6</option>
+      <option value=7> 7</option>
+    </select><br>
 
   <button type="submit">Generar Cuota</button>
 </form>

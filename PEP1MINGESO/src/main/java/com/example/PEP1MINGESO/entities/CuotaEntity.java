@@ -19,6 +19,7 @@ public class CuotaEntity {
     private Long id_cuota;
     private int numero_cuota;
     private int monto;
+    private int montoDescuento;
     private String pagada;
 
     @Column(name = "rut_cuota")
