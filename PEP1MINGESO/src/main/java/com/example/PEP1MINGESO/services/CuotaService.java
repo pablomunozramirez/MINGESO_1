@@ -6,6 +6,7 @@ import com.example.PEP1MINGESO.repositories.CuotaRepository;
 import com.example.PEP1MINGESO.repositories.EstudiantesRepository;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.sql.ClientInfoStatus;
@@ -23,7 +24,6 @@ public class CuotaService {
     EstudiantesRepository estudiantesRepository;
 
     public void generarCuota (String rut, String numeroCuota){
-        int arancel = 1500000;
         int numero_Cuotas = Integer.parseInt(numeroCuota);
         if (numero_Cuotas == 1){
             int valorCuotas = 1500000/2;
@@ -40,6 +40,7 @@ public class CuotaService {
             double arancelDescuento = estudiantesService.calcularArancel(estudiante1);
             System.out.println(arancelDescuento);
             int valorCuotas = (int)arancelDescuento/numero_Cuotas;
+            LocalDate fecha = LocalDate.parse("2023-04-10");
             for (int i = 1; i<= numero_Cuotas; i++){
                 CuotaEntity cuota = new CuotaEntity();
                 cuota.setNumero_cuota(i);
@@ -47,6 +48,8 @@ public class CuotaService {
                 cuota.setMonto(valorCuotas);
                 cuota.setPagada("Pendiente");
                 cuota.setFechaCuota(LocalDate.parse("2023-04-01"));
+                LocalDate fechaCuota = fecha.plusMonths(i-1);
+                cuota.setFechaDePago(fechaCuota);
                 cuotaRepository.save(cuota);
             }
         }

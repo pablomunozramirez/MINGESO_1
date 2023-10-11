@@ -24,5 +24,6 @@ public class CuotaEntity {
     @Column(name = "rut_cuota")
     private String rutCuota;
     @Column(name = "fecha_cuota")
-    private LocalDate fechaCuota;
+    private LocalDate fechaCuota; // Fecha que se creó la cuota
+    private LocalDate fechaDePago; // Fecha que se paga la cuota.
 }
