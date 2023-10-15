@@ -38,7 +38,7 @@
   <tbody>
   <tr th:each="cuota, status : ${cuotas}">
     <td th:text="${status.index + 1}"></td>
-    <td th:text="${cuota.montoDescuento}"></td>
+    <td th:text="${cuota.montoDescuentoI}"></td>
     <td th:text="${cuota.pagada}"></td>
     <td th:text="${cuota.fechaDePago}"></td>
   </tr>

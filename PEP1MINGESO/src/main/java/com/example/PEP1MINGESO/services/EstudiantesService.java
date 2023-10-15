@@ -16,26 +16,14 @@ public class EstudiantesService {
     @Autowired
     EstudiantesRepository estudiantesRepository;
 
-    public void crearEstudiante1(EstudiantesEntity estudianteRequest) {
+    public EstudiantesEntity crearEstudiante1(EstudiantesEntity estudianteRequest) {
         Optional<EstudiantesEntity> existingEstudiante = estudiantesRepository.findById(estudianteRequest.getRut());
 
         if (existingEstudiante.isPresent()) {
             throw new EntityExistsException("Ya existe un estudiante con el mismo rut: " + estudianteRequest.getRut());
         }
-        EstudiantesEntity estudiante = convertirAEntidad(estudianteRequest);
-        estudiantesRepository.save(estudiante);
-    }
-
-    public EstudiantesEntity convertirAEntidad(EstudiantesEntity estudianteRequest) {
-        EstudiantesEntity estudiante = new EstudiantesEntity();
-        estudiante.setRut(estudianteRequest.getRut());
-        estudiante.setNombre(estudianteRequest.getNombre());
-        estudiante.setApellidos(estudianteRequest.getApellidos());
-        estudiante.setFecha_nacimiento(estudianteRequest.getFecha_nacimiento());
-        estudiante.setTipo_colegio(estudianteRequest.getTipo_colegio());
-        estudiante.setNombre_colegio(estudianteRequest.getNombre_colegio());
-        estudiante.setAnio_egreso(estudianteRequest.getAnio_egreso());
-        return estudiante;
+        estudiantesRepository.save(estudianteRequest);
+        return estudianteRequest;
     }
 
     public int existeEstudiante(String rut) {
@@ -46,7 +34,7 @@ public class EstudiantesService {
     public int obtenerTipo(String rut){
         Optional <EstudiantesEntity> estudianteOptional = estudiantesRepository.findById(rut);
         if (estudianteOptional.isEmpty()) {
-            throw new EntityExistsException("Ya existe un estudiante con el mismo rut: " + rut);
+            throw new EntityExistsException("No existe el estudiante: " + rut);
         }
         EstudiantesEntity estudiante = estudianteOptional.get();
         String tipo = estudiante.getTipo_colegio();

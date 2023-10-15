@@ -13,4 +13,5 @@ public interface PruebasRepository extends CrudRepository<PruebasEntity, Long> {
 
     long countByRutPrueba(String rut);
 
+
 }

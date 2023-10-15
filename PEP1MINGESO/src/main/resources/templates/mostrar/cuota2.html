@@ -22,7 +22,7 @@
   <tbody>
   <tr th:each="cuota, status : ${cuotas}">
     <td th:text="${status.index + 1}"></td>
-    <td th:text="${cuota.monto}"></td>
+    <td th:text="${cuota.montoDescuentoI}"></td>
     <td th:text="${cuota.fechaDePago}"></td>
     <td th:text="${cuota.pagada}"></td>
     <td th:if="${cuota.pagada == 'Pendiente'} and ${#temporals.format(cuota.fechaDePago, 'yyyyMM') le #temporals.format(T(java.time.LocalDate).now(), 'yyyyMM')}">

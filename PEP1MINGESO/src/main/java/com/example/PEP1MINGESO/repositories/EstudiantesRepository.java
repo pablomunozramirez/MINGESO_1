@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EstudiantesRepository extends CrudRepository<EstudiantesEntity, String> {
-    // Para saber si existe un estudiante,
     boolean existsByRut(String rut);
 }

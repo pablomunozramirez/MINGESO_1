@@ -29,7 +29,6 @@ public class PruebasService {
 
     public String guardar(MultipartFile file) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-            // Ignoramos la primera línea (cabecera) del archivo CSV
             reader.readLine();
 
             String line;
@@ -61,6 +60,9 @@ public class PruebasService {
             int aux = prueba.getPuntaje();
             puntaje = puntaje + aux;
         }
-        return puntaje /numeroExamenes;
+        if (puntaje != 0){
+            return puntaje /numeroExamenes;
+        }
+        return 0;
     }
 }

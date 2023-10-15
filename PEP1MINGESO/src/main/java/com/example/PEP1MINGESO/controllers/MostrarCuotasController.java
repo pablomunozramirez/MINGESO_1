@@ -71,7 +71,7 @@ public class MostrarCuotasController {
 
     @PostMapping("/pagarcuota/{id_cuota}")
     public String pagarCuota(@PathVariable("id_cuota") Long idCuota) {
-        cuotaService.cambiarEstadoDePagoCuota(idCuota);
+        CuotaEntity a = cuotaService.cambiarEstadoDePagoCuota(idCuota);
         return ("redirect:/");
     }
 

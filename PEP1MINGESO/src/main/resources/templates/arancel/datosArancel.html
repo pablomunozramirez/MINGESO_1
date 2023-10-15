@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mostrar Resumen de Arancel</title>
+  <style>
+    table {
+      width: 80%;
+      border-collapse: collapse;
+      margin: 20px;
+    }
+
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .boton {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      outline: none;
+      color: #fff;
+      background-color: #007BFF;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 5px #999;
+    }
+
+    .boton:hover {
+      background-color: #004080;
+    }
+
+  </style>
+</head>
+<body>
+
+<h2>Mostrar Resumen de Arancel</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Rut del Estudiante</th>
+    <th>Número de Exámenes Rendidos</th>
+    <th>Promedio de Exámenes</th>
+    <th>Monto Total de Arancel</th>
+    <th>Tipo de Pago</th>
+    <th>Número Total de Cuotas</th>
+    <th>Monto Total Pagado</th>
+    <th>Fecha del Último Pago</th>
+    <th>Saldo por Pagar</th>
+    <th>Número de Cuotas con Retraso</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="resumen, rowStat : ${resumenList}">
+    <td th:text="${resumen.rutEstudiante}"></td>
+    <td th:text="${resumen.numeroExamenesRendidos}"></td>
+    <td th:text="${resumen.promedioExamenes}"></td>
+    <td th:text="${resumen.montoTotalArancel}"></td>
+    <td th:text="${resumen.tipoPago}"></td>
+    <td th:text="${resumen.numeroTotalCuotas}"></td>
+    <td th:text="${resumen.montoTotalPagado}"></td>
+    <td th:text="${resumen.fechaUltimoPago}"></td>
+    <td th:text="${resumen.saldoPorPagar}"></td>
+    <td th:text="${resumen.numeroCuotasConRetraso}"></td>
+  </tr>
+  </tbody>
+</table>
+
+<a href="http://localhost:8090" class="boton">Volver al menú</a>
+
+</body>
+</html>
