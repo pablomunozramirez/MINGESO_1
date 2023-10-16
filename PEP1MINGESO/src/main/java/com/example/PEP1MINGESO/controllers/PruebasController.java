@@ -28,7 +28,7 @@ public class PruebasController {
     @GetMapping("/mostrar")
     public String mostrarDatos(Model model) {
         model.addAttribute("datos", pruebasService.obtenerData());
-        return "/mostrar";
+        return "mostrar";
     }
 
     @GetMapping("/cargar")

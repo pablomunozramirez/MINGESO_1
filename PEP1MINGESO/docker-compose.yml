@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  postgres-db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgres
+    environment:
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: topeducation
+    ports:
+      - "5432:5432"
+
+  app:
+    container_name: mingeso1
+    image: 2pablo2/mingeso1
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/topeducation?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=1234
+    deploy:
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - postgres-db

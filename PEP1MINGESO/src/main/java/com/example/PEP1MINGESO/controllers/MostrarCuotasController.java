@@ -22,7 +22,7 @@ public class MostrarCuotasController {
 
     @GetMapping("/rut")
     public String obtenerRut(){
-        return ("/mostrar/rut");
+        return ("mostrar/rut");
     }
 
     @PostMapping("/rut")
@@ -41,13 +41,13 @@ public class MostrarCuotasController {
     @GetMapping("/cuota")
     public String mostrarCuotas (@ModelAttribute("rut") String rut, @ModelAttribute("cuotas") List<CuotaEntity> cuotas){
 
-        return ("/mostrar/cuota");
+        return ("mostrar/cuota");
     }
 
 
     @GetMapping("/rut2")
     public String obtenerRut2(){
-        return ("/mostrar/rut2");
+        return ("mostrar/rut2");
     }
 
     @PostMapping("/rut2")
@@ -66,7 +66,7 @@ public class MostrarCuotasController {
     @GetMapping("/cuota2")
     public String mostrarCuotas2 (@ModelAttribute("rut") String rut, @ModelAttribute("cuotas") List<CuotaEntity> cuotas){
 
-        return ("/mostrar/cuota2");
+        return ("mostrar/cuota2");
     }
 
     @PostMapping("/pagarcuota/{id_cuota}")

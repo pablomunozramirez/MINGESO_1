@@ -26,7 +26,7 @@ public class CuotaController {
 
     @GetMapping("/generar")
     public String vistaGenerarCuotas (){
-        return ("/cuota/generar");
+        return ("cuota/generar");
     }
 
     @PostMapping("/generar")
@@ -62,7 +62,7 @@ public class CuotaController {
     @GetMapping("/subvencionado")
     public String mostrarCuotasSubvencionado() {
         System.out.println("subvencionado");
-        return ("/cuota/subvencionado");
+        return ("cuota/subvencionado");
     }
     @PostMapping("/subvencionado")
     public String cuotassubvencionado (@ModelAttribute("rut") String rut,@RequestParam String numero_Cuotas ,Model model){
@@ -72,7 +72,7 @@ public class CuotaController {
 
     @GetMapping("/privado")
     public String mostrarCuotasPrivado(){
-        return ("/cuota/privado");
+        return ("cuota/privado");
     }
 
     @PostMapping("/privado")
@@ -83,7 +83,7 @@ public class CuotaController {
 
     @GetMapping("/municipal")
     public String mostrarCuotasMunicipal() {
-        return "/cuota/municipal";
+        return "cuota/municipal";
     }
     @PostMapping("/municipal")
     public String cuotasMunicipal (@RequestParam String rut, @RequestParam String numero_Cuotas,Model model){

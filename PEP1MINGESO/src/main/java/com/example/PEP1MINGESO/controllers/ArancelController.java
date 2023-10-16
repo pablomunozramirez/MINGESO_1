@@ -36,7 +36,7 @@ public class ArancelController {
 
     @GetMapping("/mostrarArancel")
     public String mostrarResumenArancel(Model model) {
-        return "/arancel/mostrarArancel";
+        return "arancel/mostrarArancel";
     }
 
     @PostMapping("/mostrarArancel")
@@ -50,6 +50,6 @@ public class ArancelController {
     @GetMapping("/datosArancel")
     public String mostrarArancel2 (@ModelAttribute("resumenList") List<ResumenEntity> resumenList) {
 
-        return ("/arancel/datosArancel");
+        return ("arancel/datosArancel");
     }
 }
