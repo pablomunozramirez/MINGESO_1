@@ -1,0 +1,127 @@
+     Docker:
+
+base de datos:
+
+Para ver volumen: docker volume ls
+eliminar los volumen: docker volume prune
+crea volumen :docker volume create <nombre>
+
+En consola dentro de la carpeta:
+hacer docker build -t 2pablo2/mingeso1 . (Si no hay una imagen con ese nombre se crea una)
+luego docker push 2pablo2/mingeso1
+(sin punto) (Para ver las imagenes es docker image ls)
+
+Siempre que se haga una modificación se hace un clean en maven
+Y luego se hace un install.
+
+Cuando ya tenemos el docker compose listo y todo los pasos anteriores listos
+Se hace:
+docker-compose up
+
+Para detener primero por consola es ctrl + c
+
+en el docker desktop a veces empiza a avanzar, para eso en la cmd
+se pone docker-compose down 
+
+
+
+
+pipeline{
+    agent any
+    tools {
+        maven "maven"
+	git "git"
+    }
+    stages{
+        stage("build JAR file"){
+            steps{
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/pablomunozramirez/MINGESO_1.git']])
+                dir("PEP1MINGESO"){
+                    sh "mvn clean install"
+                }
+            }
+        }
+        stage("Test"){
+            steps{
+                dir("PEP1MINGESO"){
+                    sh "mvn test"
+                }
+            }
+        }
+        stage("Build Docker Image"){
+            steps{
+                dir("PEP1MINGESO"){
+                    sh "docker build -t 2pablo2/mingeso1 ."
+                }
+            }
+        }
+        stage("Push Docker Image"){
+            steps{
+                dir("PEP1MINGESO"){
+                    withCredentials([string(credentialsId: 'dckrhubpassword', variable: 'dckpass')]) {
+                        sh "docker login -u 2pablo2 -p ${dckpass}"
+                    }
+                    sh "docker push 2pablo2/mingeso1"
+                }
+            }
+        }
+    }
+    post{
+        always{
+            dir("PEP1MINGESO"){
+                sh "docker logout"
+            }
+        }
+    }
+}
+
+pipeline{
+    agent any
+    tools{
+        maven "maven"
+    }
+    stages{
+        stage("Build JAR File"){
+            steps{
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/pablomunozramirez/MINGESO_1.git']])
+                dir("PEP1MINGESO"){
+                    sh "mvn clean install"
+                }
+            }
+        }
+        stage("Test"){
+            steps{
+                dir("PEP1MINGESO"){
+                    sh "mvn test"
+                }
+            }
+        }
+        stage("Build Docker Image"){
+            steps{
+                dir("PEP1MINGESO"){
+                    sh "docker build -t 2pablo2/mingeso1 ."
+                }
+            }
+        }
+        stage("Push Docker Image"){
+            steps{
+                dir("PEP1MINGESO"){
+                    withCredentials([string(credentialsId: 'dckrhubpassword', variable: 'dckpass')]){
+                        sh "docker login -u 2pablo2 -p ${dckpass}"
+                        
+                    }
+                    sh "docker push 2pablo2/mingeso1"
+                    
+                }
+                
+            }
+        }
+    }
+    post{
+        always{
+            dir("PEP1MINGESO"){
+                sh "docker logout"
+            }
+        }
+    }
+}
