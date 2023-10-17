@@ -23,57 +23,8 @@ Para detener primero por consola es ctrl + c
 en el docker desktop a veces empiza a avanzar, para eso en la cmd
 se pone docker-compose down 
 
+Para que jenkins actualice no es necesario hacer un pull.
 
-
-
-pipeline{
-    agent any
-    tools {
-        maven "maven"
-	git "git"
-    }
-    stages{
-        stage("build JAR file"){
-            steps{
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/pablomunozramirez/MINGESO_1.git']])
-                dir("PEP1MINGESO"){
-                    sh "mvn clean install"
-                }
-            }
-        }
-        stage("Test"){
-            steps{
-                dir("PEP1MINGESO"){
-                    sh "mvn test"
-                }
-            }
-        }
-        stage("Build Docker Image"){
-            steps{
-                dir("PEP1MINGESO"){
-                    sh "docker build -t 2pablo2/mingeso1 ."
-                }
-            }
-        }
-        stage("Push Docker Image"){
-            steps{
-                dir("PEP1MINGESO"){
-                    withCredentials([string(credentialsId: 'dckrhubpassword', variable: 'dckpass')]) {
-                        sh "docker login -u 2pablo2 -p ${dckpass}"
-                    }
-                    sh "docker push 2pablo2/mingeso1"
-                }
-            }
-        }
-    }
-    post{
-        always{
-            dir("PEP1MINGESO"){
-                sh "docker logout"
-            }
-        }
-    }
-}
 
 pipeline{
     agent any
@@ -85,21 +36,21 @@ pipeline{
             steps{
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/pablomunozramirez/MINGESO_1.git']])
                 dir("PEP1MINGESO"){
-                    sh "mvn clean install"
+                    bat "mvn clean install"
                 }
             }
         }
         stage("Test"){
             steps{
                 dir("PEP1MINGESO"){
-                    sh "mvn test"
+                    bat "mvn test"
                 }
             }
         }
         stage("Build Docker Image"){
             steps{
                 dir("PEP1MINGESO"){
-                    sh "docker build -t 2pablo2/mingeso1 ."
+                    bat "docker build -t 2pablo2/mingeso1 ."
                 }
             }
         }
@@ -107,10 +58,10 @@ pipeline{
             steps{
                 dir("PEP1MINGESO"){
                     withCredentials([string(credentialsId: 'dckrhubpassword', variable: 'dckpass')]){
-                        sh "docker login -u 2pablo2 -p ${dckpass}"
+                        bat "docker login -u 2pablo2 -p ${dckpass}"
                         
                     }
-                    sh "docker push 2pablo2/mingeso1"
+                    bat "docker push 2pablo2/mingeso1"
                     
                 }
                 
@@ -120,8 +71,79 @@ pipeline{
     post{
         always{
             dir("PEP1MINGESO"){
-                sh "docker logout"
+                bat "docker logout"
             }
         }
     }
 }
+
+
+
+
+version: "3.8"
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app1
+      - app2
+      - app3
+  postgres-db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgres
+    environment:
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: topeducation
+    ports:
+      - "5432:5432"
+
+  app1:
+    container_name: mingeso11
+    image: 2pablo2/mingeso1
+    ports:
+      - "8091:8090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/topeducation?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=1234
+    deploy:
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - postgres-db
+  app2:
+    container_name: mingeso12
+    image: 2pablo2/mingeso1
+    ports:
+      - "8092:8090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/topeducation?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=1234
+    deploy:
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - postgres-db
+  app3:
+    container_name: mingeso13
+    image: 2pablo2/mingeso1
+    ports:
+      - "8093:8090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/topeducation?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=1234
+    deploy:
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - postgres-db
