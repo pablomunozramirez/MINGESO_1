@@ -23,33 +23,33 @@ public class ArancelController {
     @Autowired
     ResumenService resumenService;
 
-    @GetMapping("/generarArancel")
+    @GetMapping("/generararancel")
     public String mostrarVistaGenerarArancel() {
         return "/arancel/generarArancel";
     }
 
-    @PostMapping("/generarArancel")
+    @PostMapping("/generararancel")
     public String generarArancel(){
         resumenService.aplicarDescuentos();
         return "redirect:/";
     }
 
-    @GetMapping("/mostrarArancel")
+    @GetMapping("/mostrararancel")
     public String mostrarResumenArancel(Model model) {
-        return "arancel/mostrarArancel";
+        return "arancel/mostrararancel";
     }
 
-    @PostMapping("/mostrarArancel")
+    @PostMapping("/mostrararancel")
     public String resumenArancel(Model model, RedirectAttributes redirectAttributes) {
         List<ResumenEntity> resumenList = resumenService.resumenArancel();
         redirectAttributes.addFlashAttribute("resumenList", resumenList);
 
-        return "redirect:/arancel/datosArancel";
+        return "redirect:/arancel/datosarancel";
     }
 
-    @GetMapping("/datosArancel")
+    @GetMapping("/datosarancel")
     public String mostrarArancel2 (@ModelAttribute("resumenList") List<ResumenEntity> resumenList) {
 
-        return ("arancel/datosArancel");
+        return ("arancel/datosarancel");
     }
 }
