@@ -38,6 +38,7 @@ public class CuotaService {
             cuotas.add(cuota);
         }else{
             Optional<EstudiantesEntity> estudiante = estudiantesRepository.findById(rut);
+            System.out.println(estudiante);
             EstudiantesEntity estudiante1 = estudiante.get();
             double arancelDescuento = estudiantesService.calcularArancel(estudiante1);
             int valorCuotas = (int)arancelDescuento/numero_Cuotas;
@@ -64,12 +65,7 @@ public class CuotaService {
     public ArrayList<CuotaEntity> obternerCuotaPorRut(String rut){
         return cuotaRepository.findByRutCuota(rut);
     }
-/*
-    public List<String> cuotaPagada(String rut){
-        List <CuotaEntity> cuotas = cuotaRepository.findByRutCuota(rut);
-        return cuotas.stream().map(CuotaEntity::getPagada).toList();
-    }
-*/
+
 
     public int existenCuotas(String rut) {
         boolean existenCuotas = cuotaRepository.existsByRutCuota(rut);

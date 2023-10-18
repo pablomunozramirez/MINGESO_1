@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mostrar Pruebas</title>
+</head>
+<body>
+
+<h2>Mostrar Pruebas</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Fecha</th>
+        <th>Puntaje</th>
+        <th>rut</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="prueba, status : ${pruebas}">
+        <td th:text="${prueba.fecha_examen}"></td>
+        <td th:text="${prueba.puntaje}"></td>
+        <td th:text="${prueba.rutPrueba}"></td>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/}" class="boton" >Volver al menú</a>
+
+</body>
+</html>

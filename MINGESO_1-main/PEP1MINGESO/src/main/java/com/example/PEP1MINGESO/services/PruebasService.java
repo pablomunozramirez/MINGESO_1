@@ -66,4 +66,7 @@ public class PruebasService {
         }
         return 0;
     }
+    public ArrayList<PruebasEntity> obtenerpruebas (){
+        return (ArrayList<PruebasEntity>) pruebasRepository.findAll();
+    }
 }

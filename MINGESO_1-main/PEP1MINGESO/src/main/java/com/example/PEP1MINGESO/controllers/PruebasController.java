@@ -1,5 +1,7 @@
 package com.example.PEP1MINGESO.controllers;
 
+import com.example.PEP1MINGESO.entities.EstudiantesEntity;
+import com.example.PEP1MINGESO.entities.PruebasEntity;
 import com.example.PEP1MINGESO.services.PruebasService;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import javax.swing.plaf.PanelUI;
 import java.awt.image.ImagingOpException;
 import java.io.IOException;
 import java.security.PublicKey;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/pruebas")
@@ -41,6 +44,13 @@ public class PruebasController {
         String mensaje = pruebasService.guardar(file);
         model.addAttribute("mensaje", mensaje);
         return "redirect:/";
+    }
+
+    @GetMapping("/mostrarpruebas")
+    public String mostrarPruebas(Model model){
+        ArrayList<PruebasEntity> pruebas = pruebasService.obtenerpruebas();
+        model.addAttribute("pruebas",pruebas);
+        return ("pruebas/mostrarpruebas");
     }
 
 
