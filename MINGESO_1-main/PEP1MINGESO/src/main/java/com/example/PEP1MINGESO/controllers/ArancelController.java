@@ -26,7 +26,7 @@ public class ArancelController {
 
     @GetMapping("/generararancel")
     public String mostrarVistaGenerarArancel() {
-        return "/arancel/generararancel";
+        return "arancel/generararancel";
     }
 
     @PostMapping("/generararancel")

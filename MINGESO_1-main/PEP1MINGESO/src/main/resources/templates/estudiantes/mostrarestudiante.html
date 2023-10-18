@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mostrar Estudiantes</title>
+</head>
+<body>
+
+<h2>Mostrar Estudiantes</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Rut</th>
+    <th>Nombre</th>
+    <th>Apellidos</th>
+    <th>Tipo</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="estudiante, status : ${estudiantes}">
+    <td th:text="${estudiante.rut}"></td>
+    <td th:text="${estudiante.nombre}"></td>
+    <td th:text="${estudiante.apellidos}"></td>
+    <td th:text="${estudiante.tipo_colegio}"></td>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<a th:href="@{/}" class="boton" >Volver al menú</a>
+
+</body>
+</html>

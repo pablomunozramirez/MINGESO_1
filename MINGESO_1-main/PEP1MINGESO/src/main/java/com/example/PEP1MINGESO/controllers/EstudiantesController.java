@@ -10,6 +10,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
+import java.util.ArrayList;
+
 @Controller
 @RequestMapping("/estudiantes")
 public class EstudiantesController {
@@ -35,5 +37,12 @@ public class EstudiantesController {
         }
         // Redirigir a la página principal
         return "redirect:/";
+    }
+
+    @GetMapping("/mostrarestudiante")
+    public String mostrarEstudiante(Model model){
+        ArrayList<EstudiantesEntity> estudiantes = estudiantesService.obtenerestudiantes();
+        model.addAttribute("estudiantes",estudiantes);
+        return ("estudiantes/mostrarestudiante");
     }
 }

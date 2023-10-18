@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -75,5 +76,8 @@ public class EstudiantesService {
         }
         EstudiantesEntity estudiante = estudianteOptional.get();
         return (estudiante.getNombre() + " " +estudiante.getApellidos());
+    }
+    public ArrayList<EstudiantesEntity> obtenerestudiantes (){
+        return (ArrayList<EstudiantesEntity>) estudiantesRepository.findAll();
     }
 }
